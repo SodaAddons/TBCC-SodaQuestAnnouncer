@@ -1,0 +1,11 @@
+## Interface: 20501
+## Title: SodaQuestAnnouncer
+## Author: Sodaro
+## Version: 0.1
+## SavedVariables: SQADB
+## SavedVariablesPerCharacter: SQAIsEnabled
+
+embeds.xml
+
+
+main.lua
