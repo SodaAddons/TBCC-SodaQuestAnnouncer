@@ -32,9 +32,8 @@ local frame = CreateFrame("FRAME", "myFrame")
 frame:RegisterEvent("QUEST_WATCH_UPDATE")
 frame:RegisterEvent("QUEST_LOG_UPDATE")
 frame:RegisterEvent("QUEST_TURNED_IN")
+frame:RegisterEvent("QUEST_ACCEPTED")
 frame:RegisterEvent("UI_INFO_MESSAGE")
-
-SLASH_SQA1 = "/SQA"
 
 local function MyCommands(msg, editbox)
     local case, text = strsplit(" ", msg, 2)
@@ -49,6 +48,7 @@ local function MyCommands(msg, editbox)
     end
     print(SQAIsEnabled)
 end
+SLASH_SQA1 = "/SQA"
 SlashCmdList["SQA"] = MyCommands
 local updatedQuestID = nil;
 local questUpdateMessage = nil;
@@ -59,6 +59,12 @@ local function eventHandler(self, event, ...)
           if errorType >= 287 and errorType <= 292 then
             questUpdateMessage = message
           end
+        end
+        if (event == "QUEST_ACCEPTED") then
+            local arg1, arg2 = ...
+            local title, level, _, _, _, _, _, questID, _, _, _, _, _, _ = GetQuestLogTitle(arg1);
+            
+            SendChatMessage("Quest accepted: ".. title, "PARTY")
         end
         if (event == "QUEST_WATCH_UPDATE") then
             updatedQuestID = ... --the quest id that changed
